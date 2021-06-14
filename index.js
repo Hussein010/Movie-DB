@@ -8,7 +8,20 @@ app.get('/', (req, res) => {
     };
   res.send(response);
 })
-
+app.get('/test', (req, res) => {
+    const response={
+        status:200, message:"ok"
+    };
+  res.send(response);
+})
+app.get('/time', (req, res) => {     
+    var date = new Date() 
+        const response= {                 
+             status:200, message:date.getHours() +":"+date.getMinutes()     
+            };     
+            res.send(response);
+})
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
+  
 })
