@@ -56,7 +56,7 @@ app.get('/search', (req, res) => {
 })
 app.get('/movies/add', (req, res) => {     
 })
-app.get('/movies/read', (req, res) => {
+app.get('/movies/get', (req, res) => {
     const response= {
 
         status:200, data:movies
@@ -67,6 +67,26 @@ app.get('/movies/edit', (req, res) => {
 })
 app.get('/movies/delete', (req, res) => {     
 })
+app.get('/movies/get/by-date', (req, res) => {
+    const response= {
+        status:200, data:movies.sort((a,b) => (a.year > b.year)? 1 : -1)
+    };
+    res.send(response);
+})
+
+app.get('/movies/get/by-rate', (req, res) => {
+    const response= {
+        status:200, data:movies.sort((a,b) => (a.rating < b.rating)? 1 : -1)
+    };
+    res.send(response);
+})
+app.get('/movies/get/by-title', (req, res) => {
+    const response= {
+        status:200, data:movies.sort((a,b) => (a.title > b.title)? 1 : -1)
+    };
+    res.send(response);
+})
+
 
 
 app.listen(port, () => {
