@@ -86,7 +86,21 @@ app.get('/movies/get/by-title', (req, res) => {
     };
     res.send(response);
 })
+app.get('/movies/get/id/:id', (req, res) => {
+    if (movies[req.params.id]==null){
+        const response= {
 
+            status:404, error:true, message:'the movie '+req.params.id+' does not exist'}
+
+        res.status(404);
+        res.send(response);
+    }else{
+    const response= {
+
+        status:200, data:movies[req.params.id]}
+    res.send(response);
+    }
+})
 
 
 app.listen(port, () => {
