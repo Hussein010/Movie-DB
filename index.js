@@ -33,6 +33,23 @@ app.get('/hello/:id', (req, res) => {
             };     
             res.send(response);
 })
+app.get('/search', (req, res) => { 
+    if (req.query.s!= null)
+    {    
+    const response= {                 
+         status:200, message: "ok ",data:req.query.s
+        };     
+        res.send(response);
+    }
+    else {
+        const response= {                 
+            status:500, error : true,  message:"you have to provide a search"
+           };     
+           res.send(response);
+
+        
+    }
+})
 
 
 app.listen(port, () => {
