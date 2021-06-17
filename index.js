@@ -63,7 +63,7 @@ app.get('/search', (req, res) => {
            res.send(response);   
     }
 })
-app.get('/movies/add', (req, res) => {   
+app.POST('/movies/add', (req, res) => {   
     let title = req.query.title;
     let year = req.query.year;
     let rating = req.query.rating;
@@ -94,14 +94,14 @@ app.get('/movies/add', (req, res) => {
     }
 })
 
-app.get('/movies/get', (req, res) => {
+app.GET('/movies/get', (req, res) => {
     const response= {
 
         status:200, data:movies
     };
     res.send(response);
 })
-app.get('/movies/edit/:id', (req, res) => {
+app.PUT('/movies/edit/:id', (req, res) => {
         let id = req.params.id;
         let title = req.query.title;
         let year = req.query.year;
@@ -134,7 +134,7 @@ app.get('/movies/edit/:id', (req, res) => {
         }    
     })
 
-app.get('/movies/delete/:id', (req, res) => {    
+app.DELETE('/movies/delete/:id', (req, res) => {    
     if (req.params.id < movies.length && req.params.id > 0) {
      for (var i=0 ; i < movies.length ; i++){
          if (movies[i].title == movies[req.params.id].title){
