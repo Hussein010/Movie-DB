@@ -14,12 +14,15 @@ app.get('/', (req, res) => {
     };
   res.send(response);
 })
+/** Writing test in the url will return ok */
 app.get('/test', (req, res) => {
     const response={
         status:200, message:"ok"
     };
   res.send(response);
 })
+/** Writing time in the url will return the current time */
+
 app.get('/time', (req, res) => {     
     var date = new Date() 
         const response= {                 
@@ -27,18 +30,23 @@ app.get('/time', (req, res) => {
             };     
             res.send(response);
 })
+/** writing hello/ will return hello */
+
 app.get('/hello', (req, res) => {     
         const response= {                 
              status:200, message: "hello" 
             };     
             res.send(response);
 })
+/** writing hello/(any id) will return hello + id */
 app.get('/hello/:id', (req, res) => {     
         const response= {                 
              status:200, message: "hello"+ "" + req.params.id
             };     
             res.send(response);
 })
+/** writing search/(any data) will return ok + data entered */
+
 app.get('/search', (req, res) => { 
     if (req.query.s!= null)
     {    
@@ -54,8 +62,37 @@ app.get('/search', (req, res) => {
            res.send(response);   
     }
 })
-app.get('/movies/add', (req, res) => {     
+app.get('/movies/add', (req, res) => {   
+    var title = req.query.title;
+    var year = req.query.year;
+    var rating = req.query.rating;
+
+    if (!title == true || (!year == true || isNaN(year)==true || year.lenghth != 4)){
+        const response= {                 
+            status:403, error : true,  message:"you cannot create a movie without providing a title and a year "
+           };     
+           res.send(response);   
+    }
+    else if (!rating == true){
+        rating = 4;
+        year = parseInt(year)
+        movies.push({title,year,rating})
+        const response= {                 
+            status:200,  message:"movie added successfully" 
+           };     
+           res.send(response);   
+    }
+    else {
+        year = parseInt(year)
+        rating = parseFloat(rating)
+        movies.push({title,year,rating})
+        const response= {                 
+            status:200,  message:"movie added successfully" 
+           };     
+           res.send(response);   
+    }
 })
+
 app.get('/movies/get', (req, res) => {
     const response= {
 
