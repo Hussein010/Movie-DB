@@ -25,7 +25,7 @@ app.get('/test', (req, res) => {
 /** Writing time in the url will return the current time */
 
 app.get('/time', (req, res) => {     
-    var date = new Date() 
+    let date = new Date() 
         const response= {                 
              status:200, message:date.getHours() +":"+date.getMinutes()     
             };     
@@ -64,9 +64,9 @@ app.get('/search', (req, res) => {
     }
 })
 app.get('/movies/add', (req, res) => {   
-    var title = req.query.title;
-    var year = req.query.year;
-    var rating = req.query.rating;
+    let title = req.query.title;
+    let year = req.query.year;
+    let rating = req.query.rating;
 
     if (!title == true || (!year == true || isNaN(year)==true || year.length != 4)){
         const response= {                 
@@ -101,8 +101,39 @@ app.get('/movies/get', (req, res) => {
     };
     res.send(response);
 })
-app.get('/movies/edit/', (req, res) => {     
-})
+app.get('/movies/edit/:id', (req, res) => {
+        let id = req.params.id;
+        let title = req.query.title;
+        let year = req.query.year;
+        let rating = req.query.rating;
+    
+        if (movies.length >= id) {
+          if (title === undefined || title === "") {
+            title = movies[id].title;
+          }
+    
+          if (year === undefined || year === "" || !(/^\d{4}$/).test(year)) {
+            year = movies[id].year;
+          }
+    
+          if (rating === undefined || rating === "") {
+            rating = movies[id].rating;
+          }
+          movies.push({title,year,rating})
+          const response= {                 
+              status:200,  message:"movie updated successfully" 
+             };     
+             res.send(response);  
+            } 
+          else {
+            const response= {                 
+            error: true, message: `the movie ${id} does not exist`,
+          };
+          res.status(404)
+          res.send(response)
+        }    
+    })
+
 app.get('/movies/delete/:id', (req, res) => {    
     if (req.params.id < movies.length && req.params.id > 0) {
      for (var i=0 ; i < movies.length ; i++){
