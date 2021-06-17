@@ -1,3 +1,4 @@
+const { response } = require('express')
 const express = require('express')
 const app = express()
 const port = 3000
@@ -67,7 +68,7 @@ app.get('/movies/add', (req, res) => {
     var year = req.query.year;
     var rating = req.query.rating;
 
-    if (!title == true || (!year == true || isNaN(year)==true || year.lenghth != 4)){
+    if (!title == true || (!year == true || isNaN(year)==true || year.length != 4)){
         const response= {                 
             status:403, error : true,  message:"you cannot create a movie without providing a title and a year "
            };     
@@ -100,9 +101,27 @@ app.get('/movies/get', (req, res) => {
     };
     res.send(response);
 })
-app.get('/movies/edit', (req, res) => {     
+app.get('/movies/edit/', (req, res) => {     
 })
-app.get('/movies/delete', (req, res) => {     
+app.get('/movies/delete/:id', (req, res) => {    
+    if (req.params.id < movies.length && req.params.id > 0) {
+     for (var i=0 ; i < movies.length ; i++){
+         if (movies[i].title == movies[req.params.id].title){
+             movies.splice(i,1);
+             const response= {                 
+                status:200,error:false, message:"movie deleted successfully" 
+                             };     
+       }
+   }
+   res.send(response);  
+
+}
+    else {           
+          const response= {                 
+        status:404, error:true, message:"the movie" + req.params.id + "does not exist" 
+       };     
+       res.send(response);  
+  }
 })
 app.get('/movies/get/by-date', (req, res) => {
     const response= {
